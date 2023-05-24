@@ -5,7 +5,8 @@ FROM azul/zulu-openjdk:8
 RUN apt-get update && apt-get install -y curl 
 
 ENV HADOOP_VERSION=2.9.2
-ENV HADOOP_URL=http://mirror.apache-kr.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
+# ENV HADOOP_URL=http://mirror.apache-kr.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
+ENV HADOOP_URL=https://archive.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 
 # Hadoop 2.9.2 버전을 내려받고 /opt/hadoop에 압축 해제
 RUN curl -fSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
