@@ -26,4 +26,4 @@ ADD core-site.xml /etc/hadoop/
 ENV HADOOP_PREFIX /opt/hadoop
 ENV HADOOP_CONF_DIR /etc/hadoop
 ENV PATH $HADOOP_PREFIX/bin/:$PATH
-ENV JAVA_HOME /usr/lib/jvm/zulu-8-amd64
+ENV JAVA_HOME /usr/lib/jvm/zulu8-ca-amd64
