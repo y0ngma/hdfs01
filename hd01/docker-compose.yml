@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  hdfs_all:
+    image: ubuntu:yong
+    container_name: hdfs_con
+    restart: always
+    build:
+      context: .
+
+    hostname: hdfs_yong
+    # ports:
+    volumes:
+      - /home/yh-jung/home/hdfs01/hd01/hadoop-env.sh:/hadoop-3.3.4/etc/hadoop/hadoop-env.sh
+    #   docker cp hdfs_con:/hadoop-3.3.4/etc/hadoop/hadoop-env.sh /home/yh-jung/home/hdfs01/hd01/
+    # networks:
+    #   - hdfs_net
+
+    # command: tail -f /dev/null
+    # tty: true
