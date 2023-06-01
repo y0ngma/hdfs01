@@ -23,6 +23,7 @@ https://www.44bits.io/ko/post/is-docker-container-a-virtual-machine-or-a-process
 
     # 컨테이너내부 /hadoop-3.3.4 경로에서 hadoop인식 확인
     bin/hadoop
+    /hadoop-3.3.4/bin/hadoop version
     ```
 ### 1. Standalone Operation
 - https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html#Standalone_Operation
@@ -35,3 +36,28 @@ https://www.44bits.io/ko/post/is-docker-container-a-virtual-machine-or-a-process
     ```
 
 ### 2. Pseudo-Distributed Operation
+1. Format the filesystem:
+    `$ bin/hdfs namenode -format`
+1. Start NameNode daemon and DataNode daemon:
+    `$ sbin/start-dfs.sh`
+    - 에러발생
+    ```
+    root@e39abee09715:~# /hadoop-3.3.4/sbin/start-dfs.sh
+    Starting namenodes on [e39abee09715]
+    pdsh@e39abee09715: e39abee09715: connect: Connection refused
+    Starting datanodes
+    localhost: ERROR: Cannot set priority of datanode process 2253
+    pdsh@e39abee09715: localhost: ssh exited with exit code 1
+    2023-05-31 05:47:11,302 ERROR conf.Configuration: error parsing conf hdfs-site.xml
+    ```
+    - 이후 다음을 추가
+    ```
+    #@ /root/.bashrc
+    export HADOOP_HOME=/usr/lib/hadoop_package/hadoop-2.5.6
+    export HADOOP_MAPRED_HOME=$HADOOP_HOME 
+    export HADOOP_COMMON_HOME=$HADOOP_HOME 
+    export HADOOP_HDFS_HOME=$HADOOP_HOME 
+    export YARN_HOME=$HADOOP_HOME
+    export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native 
+    export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
+    ```
