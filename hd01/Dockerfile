@@ -6,4 +6,7 @@ RUN wget https://dlcdn.apache.org/hadoop/common/hadoop-3.3.4/hadoop-3.3.4.tar.gz
 
 RUN apt-get install -y ssh pdsh
 
+ADD cpfile/* /hadoop-3.3.4/etc/hadoop/
+
+WORKDIR /hadoop-3.3.4
 CMD ["tail","-f","/dev/null"]

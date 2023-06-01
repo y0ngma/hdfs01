@@ -2,19 +2,20 @@ version: "3"
 
 services:
   hdfs_all:
-    image: ubuntu:yong
-    container_name: hdfs_con
-    restart: always
-    build:
-      context: .
+    build: .
+    image: yong_hdfs
 
-    hostname: hdfs_yong
-    # ports:
-    volumes:
-      - /home/yh-jung/home/hdfs01/hd01/hadoop-env.sh:/hadoop-3.3.4/etc/hadoop/hadoop-env.sh
+    container_name: hdfs_con # 명시하지 않을시 <폴더명>_<서비스명>_<서수>이렇게 됨
+    # hostname: hdfs_yong # 외부에서 인식/접근할 수 없는 쓸모없는 설정
+
+    # volumes:
+      # - /home/yh-jung/home/hdfs01/hd01/hadoop-env.sh:/hadoop-3.3.4/etc/hadoop/hadoop-env.sh
+      # - /home/yh-jung/home/hdfs01/hd01/core-site.xml:/hadoop-3.3.4/etc/hadoop/core-site.xml
+      # - /home/yh-jung/home/hdfs01/hd01/hdfs-site.xml:/hadoop-3.3.4/etc/hadoop/hdfs-site.xml
     #   docker cp hdfs_con:/hadoop-3.3.4/etc/hadoop/hadoop-env.sh /home/yh-jung/home/hdfs01/hd01/
+
+    # ports:
     # networks:
     #   - hdfs_net
 
     # command: tail -f /dev/null
-    # tty: true
