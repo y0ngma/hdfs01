@@ -40,7 +40,7 @@ https://www.44bits.io/ko/post/is-docker-container-a-virtual-machine-or-a-process
     `$ bin/hdfs namenode -format`
 1. Start NameNode daemon and DataNode daemon:
     `$ sbin/start-dfs.sh`
-    - 에러발생
+    - 에러발생 https://cwiki.apache.org/confluence/display/HADOOP2/connectionrefused
     ```
     root@e39abee09715:~# /hadoop-3.3.4/sbin/start-dfs.sh
     Starting namenodes on [e39abee09715]
@@ -50,6 +50,7 @@ https://www.44bits.io/ko/post/is-docker-container-a-virtual-machine-or-a-process
     pdsh@e39abee09715: localhost: ssh exited with exit code 1
     2023-05-31 05:47:11,302 ERROR conf.Configuration: error parsing conf hdfs-site.xml
     ```
+
     - 이후 다음을 추가
     ```
     #@ /root/.bashrc
@@ -61,3 +62,7 @@ https://www.44bits.io/ko/post/is-docker-container-a-virtual-machine-or-a-process
     export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native 
     export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
     ```
+    - cannot-set-priority-of-datanode-process
+        - https://stackoverflow.com/questions/46283634/localhost-error-cannot-set-priority-of-datanode-process-32156
+        - 이미 사용중인 포트번호 일 수도 있음.
+    - /home/ubuntu 사용자명이 우분투 왜?
