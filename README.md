@@ -66,3 +66,9 @@ https://www.44bits.io/ko/post/is-docker-container-a-virtual-machine-or-a-process
         - https://stackoverflow.com/questions/46283634/localhost-error-cannot-set-priority-of-datanode-process-32156
         - 이미 사용중인 포트번호 일 수도 있음.
     - /home/ubuntu 사용자명이 우분투 왜?
+
+### Note
+```bash
+# 자동 종료되는 컨테이너 프로세스 접속 exec안될때 사용가능한 명령어
+docker run -it --entrypoint=/bin/bash your_image_id
+```
