@@ -70,5 +70,8 @@ https://www.44bits.io/ko/post/is-docker-container-a-virtual-machine-or-a-process
 ### Note
 ```bash
 # 자동 종료되는 컨테이너 프로세스 접속 exec안될때 사용가능한 명령어
-docker run -it --entrypoint=/bin/bash your_image_id
+# docker run -it --entrypoint=/bin/bash your_image_id
+docker run -it --entrypoint=/bin/bash 8f334379156e
+# cp, mv 파일 강제 덮어쓰기 명령어
+/usr/bin/cp -f src_path/test.txt trg_path/test.txt
 ```

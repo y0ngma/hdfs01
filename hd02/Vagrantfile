@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
 
     ### 기타
     config.vm.provision "shell", inline: <<-SHELL
-        sudo cp -r /sync/* /
+        /usr/bin/cp -f -r /sync/* /
         # 에러 : network data-echo-network declared as external, but could not be found 해결법
         docker network create data-echo-network
         # docker compose -f /hadoop/docker-compose.yml up -d --build
