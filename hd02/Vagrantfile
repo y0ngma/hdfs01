@@ -1,9 +1,14 @@
 Vagrant.configure("2") do |config|
     config.vm.box = "generic/ubuntu2204"
     config.vm.box_version = "4.2.16"
-    config.vm.network "forwarded_port", host: 9000, guest: 9000, host_ip: "127.0.0.1"
-    config.vm.network "forwarded_port", host: 9870, guest: 9870, host_ip: "127.0.0.1"
+    # config.vm.hostname = "data-echo-network"
+    # config.vm.network "public_network", ip: "192.168.0.1", hostname: true
+    config.vm.network "forwarded_port", host: 8081, guest: 8081, host_ip: "127.0.0.1"
+    # 호스트에서만 접근 가능한 아이피 값을 추가적으로 지정하기
     config.vm.network "private_network", ip: "192.168.33.11"
+    # # 브릿지를 통해 마치 내부 망의 물리머신에 있는 머신처럼 사용가능
+    # config.vm.network "public_network", :bridge => 'en0'
+
     # 마운트 시킬 호스트의 상위폴더는 미리 생성 해야한다
     config.vm.synced_folder "../../hdfs01_hd02_folder", "/sync"
     config.vm.post_up_message
@@ -15,13 +20,15 @@ Vagrant.configure("2") do |config|
         # 호스트리소스 최대사용 허용치 설정(단위%)
         machine.customize ["modifyvm", :id, "--vram", "128", "--cpuexecutioncap", "50"]
     end
+
     ### 도커관련
     config.vm.provision "shell", inline: <<-SHELL
         sudo apt-get update -q
         wget -qO- https://get.docker.com/ | sh
-        sudo snap install docker
+        sudo apt install -y docker-compose
         usermod -aG docker vagrant
     SHELL
+
     ### 기타
     config.vm.provision "shell", inline: <<-SHELL
         sudo cp -r /sync/* /
