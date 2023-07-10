@@ -74,4 +74,6 @@ https://www.44bits.io/ko/post/is-docker-container-a-virtual-machine-or-a-process
 docker run -it --entrypoint=/bin/bash 8f334379156e
 # cp, mv 파일 강제 덮어쓰기 명령어
 /usr/bin/cp -f src_path/test.txt trg_path/test.txt
+# 명령어 확인하기
+docker image inspect hadoop_hadoop:latest | jq '.[].ContainerConfig.Cmd'
 ```

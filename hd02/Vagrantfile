@@ -27,6 +27,8 @@ Vagrant.configure("2") do |config|
         wget -qO- https://get.docker.com/ | sh
         sudo apt install -y docker-compose
         usermod -aG docker vagrant
+        sudo apt install -y jq
+
     SHELL
 
     ### 기타
