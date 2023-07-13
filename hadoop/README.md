@@ -13,6 +13,9 @@ https://blog.geunho.dev/posts/hadoop-docker-test-env-hdfs/#fn:1
 
 ## 명령어
 ```bash
+# docker 실행 권한 부여
+sudo chown yhjeong:yhjeong /var/run/docker.sock
+
 # @/hdfs01/hadoop/base 베이스 이미지 빌드
 cd base
 docker build --progress=plain -t hadoop-base:2.9.2 .
@@ -30,6 +33,7 @@ docker-compose up -d
 1. docker command
     ```py
     docker ps -a | grep hadoop
+    docker ps -f "name=node"
     docker network ls # bridge, hadoop_bridge, host 확인
     docker volume ls # hadoop_namenode 확인
     docker logs -f namenode
