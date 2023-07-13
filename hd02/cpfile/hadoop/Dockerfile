@@ -59,8 +59,5 @@ RUN chmod 0600 ~/.ssh/authorized_keys
 
 ADD start.sh /start.sh
 RUN chmod a+x /start.sh
+RUN echo $(pwd)
 CMD ["/start.sh", "/opt/hadoop/dfs/name"]
-
-
-
-

@@ -71,9 +71,22 @@ https://www.44bits.io/ko/post/is-docker-container-a-virtual-machine-or-a-process
 ```bash
 # 자동 종료되는 컨테이너 프로세스 접속 exec안될때 사용가능한 명령어
 # docker run -it --entrypoint=/bin/bash your_image_id
-docker run -it --entrypoint=/bin/bash 8f334379156e
+docker run -it --entrypoint=/bin/bash ff735660e7fa
 # cp, mv 파일 강제 덮어쓰기 명령어
 /usr/bin/cp -f src_path/test.txt trg_path/test.txt
 # 명령어 확인하기
 docker image inspect hadoop_hadoop:latest | jq '.[].ContainerConfig.Cmd'
+```
+
+### error
+- 윈도우와 우분투 왔다갔다 하면서 코드내 공백이 바뀐경우
+https://github.com/puphpet/puphpet/issues/266
+
+### diagram test
+```mermaid
+  graph TD;
+      A-->B;
+      A-->C;
+      B-->D;
+      C-->D;
 ```

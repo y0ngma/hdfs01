@@ -1,0 +1,40 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# reference site https://jaynamm.tistory.com/entry/11-VagrantFile-%EC%83%9D%EC%84%B1-%EB%B0%8F-3%EA%B0%9C%EC%9D%98-%EA%B0%80%EC%83%81-%EB%A8%B8%EC%8B%A0-%EC%83%9D%EC%84%B1
+Vagrant.configure("2") do |config|
+
+  ### Master Node ####
+
+  config.vm.define "k8s-master" do |master|
+    master.vm.box = "centos/7"
+    master.vm.provider "virtualbox" do |vb|
+      vb.name = "k8s-master"
+      vb.cpus = 2
+      vb.memory = 3072
+      vb.customize ["modifyvm", :id, "--groups", "/k8s-cluster"]
+    end
+    master.vm.host_name = "k8s-master"
+    master.vm.network "private_network", ip: "192.168.1.10"
+    master.vm.network "forwarded_port", guest: 22, host: 10030, auto_correct: true, id: "ssh"
+    master.vm.synced_folder ".", "/vagrant", disabled: true
+  end
+
+  ### Worker node ###
+
+  (1..2).each do |i|
+    config.vm.define "k8s-worker#{i}" do |worker|
+      worker.vm.box = "centos/7"
+      worker.vm.provider "virtualbox" do |vb|
+        vb.name = "k8s-worker#{i}"
+        vb.cpus = 1
+        vb.memory = 2048
+        vb.customize ["modifyvm", :id, "--groups", "/k8s-cluster"]
+      end
+      worker.vm.host_name = "k8s-worker#{i}"
+      worker.vm.network "private_network", ip: "192.168.1.1#{i}"
+      worker.vm.network "forwarded_port", guest: 22, host: "1003#{i}", auto_correct: true, id: "ssh"
+      worker.vm.synced_folder ".", "/vagrant", disabled: true
+    end
+  end
+
+end
