@@ -53,3 +53,11 @@ docker-compose up -d
         hadoop fs -ls -R /tmp
         hadoop fs -rm -r /tmp/test/app
         ```
+## DataNode
+1. 파일 블록을 저장하는 로컬 파일 시스템 경로
+1. DataNode 용 hdfs-site.xml 설정
+1. 이미지 생성
+    ```bash
+    cd datanode
+    docker build -t hadoop-datanode:2.9.2 .
+    ```
