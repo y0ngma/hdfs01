@@ -32,10 +32,9 @@ docker-compose up -d
 ## NameNode 컨테이너 기동 후
 1. docker command
     ```py
-    docker ps -a | grep hadoop
-    docker ps -f "name=node"
+    docker ps -f name=node
     docker network ls # bridge, hadoop_bridge, host 확인
-    docker volume ls # hadoop_namenode 확인
+    docker volume ls -f name=hadoop # hadoop_namenode 확인
     docker logs -f namenode
     ```
 1. 네임노드 웹UI http://localhost:50070 접속 가능여부 확인
@@ -53,6 +52,7 @@ docker-compose up -d
         hadoop fs -ls -R /tmp
         hadoop fs -rm -r /tmp/test/app
         ```
+
 ## DataNode
 1. 파일 블록을 저장하는 로컬 파일 시스템 경로
 1. DataNode 용 hdfs-site.xml 설정

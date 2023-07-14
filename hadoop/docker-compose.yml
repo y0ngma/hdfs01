@@ -1,9 +1,17 @@
-version: "3"
+version: "3.4"
+
+# 이미지와 네트워크 정보에 대한 base service를 지정
+## x-datanode_base서비스를 변수 &datanode_base에 담기, 호출 *datanode_base
+## 공통적인 부분 image명과 network명. 허나 개별서비스내 항목이 있으면 덮어쓰기됨.
+x-datanode_base: &datanode_base
+  image: hadoop-datanode:2.9.2
+  networks:
+    - bridge
 
 services:
   namenode:
     image: hadoop-namenode:2.9.2
-    container_name: namenode
+    container_name: namenode_con
     hostname: namenode
     ports:
       - "50070:50070"
@@ -14,8 +22,32 @@ services:
     networks:
       - bridge
 
+  datanode01:
+    <<: *datanode_base
+    container_name: datanode01_con
+    hostname: datanode01
+    volumes:
+      - datanode01:/opt/hadoop/dfs/data
+
+  datanode02:
+    <<: *datanode_base
+    container_name: datanode02_con
+    hostname: datanode02
+    volumes:
+      - datanode02:/opt/hadoop/dfs/data
+
+  datanode03:
+    <<: *datanode_base
+    container_name: datanode03_con
+    hostname: datanode03
+    volumes:
+      - datanode03:/opt/hadoop/dfs/data
+
 volumes:
   namenode:
+  datanode01:
+  datanode02:
+  datanode03:
 
 networks:
   bridge:
