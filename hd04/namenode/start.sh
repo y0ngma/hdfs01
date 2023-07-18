@@ -5,8 +5,8 @@
 NAME_DIR=$1
 # echo "$JAVA_HOME 내 파일 목록 ============================================== "
 # echo "$(ls $JAVA_HOME)"
-# echo "$HADOOP_PREFIX/bin/hdfs 파일 목록 ============================================== "
-# echo "$(ls $HADOOP_PREFIX/bin/hdfs)"
+# echo "$HADOOP_HOME/bin/hdfs 파일 목록 ============================================== "
+# echo "$(ls $HADOOP_HOME/bin/hdfs)"
 # echo "$HADOOP_CONF_DIR 파일 목록 ============================================== "
 # echo "$(ls $HADOOP_CONF_DIR)"
 
@@ -16,9 +16,9 @@ if [ "$(ls -A $NAME_DIR)" ]; then
 # 비어있다면 포맷을 진행
 else
   echo "Format NameNode ============================================== "
-  $HADOOP_PREFIX/bin/hdfs --config $HADOOP_CONF_DIR namenode -format
+  $HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR namenode -format
 fi
 
 # NameNode 기동
 echo "Run NameNode ============================================== "
-$HADOOP_PREFIX/bin/hdfs --config $HADOOP_CONF_DIR namenode
+$HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR namenode

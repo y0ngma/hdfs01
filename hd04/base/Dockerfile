@@ -38,9 +38,9 @@ RUN ln -s /opt/hadoop-$HADOOP_VERSION /opt/hadoop \
 ADD core-site.xml /etc/hadoop/
 
 ## 1. hadoop 환경 변수 등록
-ENV HADOOP_PREFIX /opt/hadoop
+ENV HADOOP_HOME /opt/hadoop
 ENV HADOOP_CONF_DIR /etc/hadoop
-ENV PATH $HADOOP_PREFIX/bin/:$PATH
+ENV PATH $HADOOP_HOME/bin/:$PATH
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 
 ## 2. hive 환경 변수 등록
