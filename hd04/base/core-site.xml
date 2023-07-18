@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <!-- URI의 호스트명이 namenode로 설정:NameNode컨테이너의 호스트명과 동일 -->
+        <value>hdfs://namenode:9000/</value>
+        <description>NameNode URI</description>
+    </property>
+</configuration>
