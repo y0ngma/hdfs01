@@ -82,11 +82,23 @@ docker image inspect hadoop_hadoop:latest | jq '.[].ContainerConfig.Cmd'
 - 윈도우와 우분투 왔다갔다 하면서 코드내 공백이 바뀐경우
 https://github.com/puphpet/puphpet/issues/266
 
-### diagram test
-```mermaid
-  graph TD;
-      A-->B;
-      A-->C;
-      B-->D;
-      C-->D;
+- CentOS Stream 8에 Virtualbox 설치시 yum 명령어 안되는 문제
+https://www.how2shout.com/how-to/install-virtualbox-in-centos-8-linux-or-stream.html
+```bash
+sudo dnf config-manager --add-repo=https://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo
+sudo rpm --import https://www.virtualbox.org/download/oracle_vbox.asc
 ```
+
+- 도커 no space left 에러
+    - docker system df에 (builder 캐시 RECLAIMABLE 비율 확인)
+    - docker builder prune
+    - 참고
+        - https://collabnix.com/how-to-clear-docker-cache/
+        - https://www.baeldung.com/linux/docker-fix-no-space-error#2-changing-the-storage-location
+    - RUN apt-get clean && rm -rf /var/lib/apt/lists/* (캐시삭제)
+        ```
+        # 마지막에 한번 캐시삭제시
+        hadoop-base                   latest           1fea6560a19b   2 hours ago     3.53GB
+        # 매 압축해제 마다 캐시삭제시 이미지 용량(intermediate layer)
+        hadoop-base                   latest           19c3bc0260f7   19 minutes ago   3.16GB
+        ```
