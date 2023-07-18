@@ -41,6 +41,13 @@ ADD core-site.xml /etc/hadoop/
 ENV HADOOP_HOME /opt/hadoop
 ENV HADOOP_CONF_DIR /etc/hadoop
 ENV PATH $HADOOP_HOME/bin/:$PATH
+# ENV HADOOP_OPTS="-Djava.library.path=$HADOOP_HOME/lib/native"
+# ENV HDFS_NAMENODE_USER=root
+# ENV HDFS_SECONDARYNAMENODE_USER=root
+# ENV HDFS_DATANODE_USER=root
+# ENV YARN_HOME=$HADOOP_HOME
+# ENV YARN_RESOURCEMANAGER_USER=root
+# ENV YARN_NODEMANAGER_USER=root
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 
 ## 2. hive 환경 변수 등록
@@ -48,7 +55,8 @@ ENV HIVE_HOME=$HADOOP_HOME/apache-hive-3.1.3-bin
 ENV PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin:$HIVE_HOME/bin:/spark/bin
 
 ## 3. spark 환경 변수 등록
-RUN SPARK_HOME="/spark-3.4.0-bin-hadoop3"
+# RUN SPARK_HOME="/spark-3.4.0-bin-hadoop3"
+RUN SPARK_HOME="/spark-$SPARK_VERSION-bin-hadoop3"
 
 # intermediate layer에 쌓이는 cached 패키지 파일과 리스트 정리
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
