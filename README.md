@@ -1,4 +1,8 @@
 # Hadoop dockerizing from scratch
+
+## 계획
+    Hadoop, Hive, Spark, Kafka 등 어디까지 구성할지
+    
 ## 도커 정보
 https://www.44bits.io/ko/post/is-docker-container-a-virtual-machine-or-a-process
 - 도커 컨테이너는 가상머신이 아니고 프로세스다
@@ -67,7 +71,92 @@ https://www.44bits.io/ko/post/is-docker-container-a-virtual-machine-or-a-process
         - 이미 사용중인 포트번호 일 수도 있음.
     - /home/ubuntu 사용자명이 우분투 왜?
 
-### Note
+---
+
+# 노드별 컨테이너로 하둡구성하기
+https://blog.geunho.dev/posts/hadoop-docker-test-env-hdfs/#fn:1
+
+## 디렉토리 구조
+```
+.
+└── hadoop
+    ├── base
+    ├── namenode
+    ├── datanode
+    └── docker-compose.yml
+```
+
+## 명령어
+```bash
+# docker 실행 권한 부여
+sudo chown yhjeong:yhjeong /var/run/docker.sock
+
+# @/hdfs01/hadoop/base 베이스 이미지 빌드
+cd base
+docker build --progress=plain -t hadoop-base:2.9.2 .
+
+# @/hdfs01/hadoop/namenode : 네임노드 이미지 빌드
+cd ../namenode
+docker build -t hadoop-namenode:2.9.2 .
+
+# @/hdfs01/hadoop(root dir) : NameNode 컨테이너 기동
+cd ..
+docker-compose up -d
+```
+
+## NameNode 컨테이너 기동 정상여부 확인
+1. docker command
+```bash
+docker ps -f name=node
+docker logs -f namenode
+```
+
+1. 생성된 bridge 네트워크 확인
+```bash
+# docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+0d9989bd9f78        bridge              bridge              local
+9ae1ae84360f        hadoop_bridge       bridge              local
+62a94ebd58b7        host                host                local
+```
+
+1. 생성된 volume 확인
+```bash
+# docker volume ls -f name=node
+DRIVER              VOLUME NAME
+local               hadoop_namenode
+```
+
+1. 네임노드 웹UI http://localhost:50070 접속 가능여부 확인
+    - http://192.168.0.125:50070
+
+1. NameNode 컨테이너 내부에 있는 Hadoop클라이언트 실행
+    - datanode 띄우지 않더라도 폴더생성삭제, 파일목록조회 가능
+        ```py
+        # namenode 이름의 컨테이너의 hadoop 클라이언트를 실행. 파일 시스템의 root 디렉토리를 모두 조회한다
+        docker exec namenode /opt/hadoop/bin/hadoop fs -ls -R /
+
+        # 명령어 등록
+        alias hadoop="docker exec namenode /opt/hadoop/bin/hadoop"
+
+        # 폴더 생성/조회/삭제
+        hadoop fs -mkdir -p /tmp/test/app
+        hadoop fs -ls -R /tmp
+        hadoop fs -rm -r /tmp/test/app
+        ```
+
+## DataNode
+1. 파일 블록을 저장하는 로컬 파일 시스템 경로
+1. DataNode 용 hdfs-site.xml 설정
+1. 이미지 생성
+    ```bash
+    cd datanode
+    docker build -t hadoop-datanode:2.9.2 .
+    ```
+
+---
+
+# Note
 ```bash
 # 자동 종료되는 컨테이너 프로세스 접속 exec안될때 사용가능한 명령어
 # docker run -it --entrypoint=/bin/bash your_image_id
@@ -78,7 +167,7 @@ docker run -it --entrypoint=/bin/bash ff735660e7fa
 docker image inspect hadoop_hadoop:latest | jq '.[].ContainerConfig.Cmd'
 ```
 
-### error
+## error
 - 윈도우와 우분투 왔다갔다 하면서 코드내 공백이 바뀐경우
 https://github.com/puphpet/puphpet/issues/266
 
