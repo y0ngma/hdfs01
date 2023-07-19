@@ -1,12 +1,11 @@
 version: "3.4"
 
-# 이미지와 네트워크 정보에 대한 base service를 지정
-# ## x-datanode_base서비스를 변수 &datanode_base에 담기, 호출 *datanode_base
-# ## 공통적인 부분 image명과 network명. 허나 개별서비스내 항목이 있으면 덮어쓰기됨.
-# x-datanode_base: &datanode_base
-#   image: hadoop-datanode
-#   networks:
-#     - bridge
+## x-datanode_base서비스를 변수 &datanode_base에 담기, 호출 *datanode_base
+## 공통적인 부분 image명과 network명. 허나 개별서비스내 항목이 있으면 덮어쓰기됨.
+x-datanode_base: &datanode_base
+  image: hadoop-datanode
+  networks:
+    - bridge
 
 services:
   namenode:
@@ -22,32 +21,24 @@ services:
     networks:
       - bridge
 
-  # datanode01:
-  #   <<: *datanode_base
-  #   container_name: datanode01
-  #   hostname: datanode01
-  #   volumes:
-  #     - datanode01:/opt/hadoop/dfs/data
+  datanode01:
+    <<: *datanode_base
+    container_name: datanode01
+    hostname: datanode01
+    volumes:
+      - datanode01:/opt/hadoop/dfs/data
 
-  # datanode02:
-  #   <<: *datanode_base
-  #   container_name: datanode02
-  #   hostname: datanode02
-  #   volumes:
-  #     - datanode02:/opt/hadoop/dfs/data
-
-  # datanode03:
-  #   <<: *datanode_base
-  #   container_name: datanode03
-  #   hostname: datanode03
-  #   volumes:
-  #     - datanode03:/opt/hadoop/dfs/data
+  datanode02:
+    <<: *datanode_base
+    container_name: datanode02
+    hostname: datanode02
+    volumes:
+      - datanode02:/opt/hadoop/dfs/data
 
 volumes:
   namenode:
-  # datanode01:
-  # datanode02:
-  # datanode03:
+  datanode01:
+  datanode02:
 
 networks:
   bridge:
