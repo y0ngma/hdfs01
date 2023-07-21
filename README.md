@@ -1,8 +1,19 @@
 # Hadoop dockerizing from scratch
 
-## 계획
+## 개념
     Hadoop, Hive, Spark, Kafka 등 어디까지 구성할지
-    
+- 구조
+    - DW
+    - ODS (staging)
+    - DM
+- 분석환경
+### hive =sql(저장형식 orc 압축율 3배 장점)
+### kafka
+- 트럭IoT 실시간 대용량데이터 
+- producer consumer 데이터 유실이 적고 순차적으로 메세지 형태로 전송(선입선출)
+### Spark
+- 유용한 시각화 오픈소스 (지도표시) 사용가능
+
 ## 도커 정보
 https://www.44bits.io/ko/post/is-docker-container-a-virtual-machine-or-a-process
 - 도커 컨테이너는 가상머신이 아니고 프로세스다
@@ -16,7 +27,8 @@ https://www.44bits.io/ko/post/is-docker-container-a-virtual-machine-or-a-process
 - https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html#Prepare_to_Start_the_Hadoop_Cluster
     ```
     # 컨테이너 구동 후 내부에 수정할 파일을 복사해오기
-    docker cp hdfs_con:/hadoop-3.3.4/etc/hadoop/hadoop-env.sh /home/yh-jung/home/hdfs01/hd01/
+    # docker cp [컨테이너명]:[내부경로/hadoop-env.sh] [가져올경로]
+    docker cp namenode:/etc/hadoop/hadoop-env.sh .
 
     # 54번째 줄에 다음과 같이 내부 자바 설치 경로 입력
     export JAVA_HOME=/lib/jvm/java-11-openjdk-amd64
@@ -191,3 +203,8 @@ sudo rpm --import https://www.virtualbox.org/download/oracle_vbox.asc
         # 매 압축해제 마다 캐시삭제시 이미지 용량(intermediate layer)
         hadoop-base                   latest           19c3bc0260f7   19 minutes ago   3.16GB
         ```
+
+- namenode is running as process 77.  Stop it first and ensure /tmp/hadoop-root-namenode.pid file is empty before retry.
+- ssh 수동 실행으로 웹UI 접속확인
+    - ~/ssh start
+    
