@@ -203,6 +203,8 @@ sudo rpm --import https://www.virtualbox.org/download/oracle_vbox.asc
         # 매 압축해제 마다 캐시삭제시 이미지 용량(intermediate layer)
         hadoop-base                   latest           19c3bc0260f7   19 minutes ago   3.16GB
         ```
+    - <none>으로 되어있는 이미지 삭제
+        docker rmi $(docker images -f dangling=true -q)
 
 - namenode is running as process 77.  Stop it first and ensure /tmp/hadoop-root-namenode.pid file is empty before retry.
 - ssh 수동 실행으로 웹UI 접속확인
