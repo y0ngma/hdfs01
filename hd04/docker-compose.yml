@@ -3,13 +3,13 @@ version: "3.4"
 ## x-datanode_base서비스를 변수 &datanode_base에 담기, 호출 *datanode_base
 ## 공통적인 부분 image명과 network명. 허나 개별서비스내 항목이 있으면 덮어쓰기됨.
 x-datanode_base: &datanode_base
-  image: hadoop-datanode
+  image: hadoop-datanode:3.3.5
   networks:
     - bridge
 
 services:
   namenode:
-    image: hadoop-namenode
+    image: hadoop-namenode:3.3.5
     container_name: namenode
     hostname: namenode
     ports:
