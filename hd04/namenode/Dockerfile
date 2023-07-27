@@ -1,5 +1,5 @@
 # 방금 전 로컬에 생성한 base 이미지
-FROM hadoop-base:3.3.5
+FROM hadoop-base
 
 # NameNode Web UI 응답 여부를 통해 Healthcheck
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 CMD curl -f http://localhost:50070/ || exit 1
@@ -19,5 +19,6 @@ RUN chmod a+x /start.sh
 EXPOSE 50070 9000
 
 # 시작 명령어 등록
+# CMD ["/start.sh", "/opt/hadoop/dfs/name", "service ssh start"]
 CMD ["/start.sh", "/opt/hadoop/dfs/name"]
 # SHELL ["ls"]

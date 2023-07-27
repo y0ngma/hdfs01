@@ -16,3 +16,15 @@ fi
 # NameNode 기동
 echo "Run NameNode ============================================== "
 $HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR namenode
+/etc/init.d/ssh start
+service ssh start
+start-all.sh
+
+# Hive
+hdfs dfs -mkdir -p /user/test 
+hdfs dfs -mkdir -p /user/tmp 
+hdfs dfs -mkdir -p /user/hive/warehouse 
+hdfs dfs -chmod g+w /user/tmp 
+hdfs dfs -chmod g+w /user/test
+hdfs dfs -chmod g+w /user/hive/warehouse 
+hiveserver2
