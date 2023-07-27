@@ -196,17 +196,41 @@ sudo rpm --import https://www.virtualbox.org/download/oracle_vbox.asc
     - 참고
         - https://collabnix.com/how-to-clear-docker-cache/
         - https://www.baeldung.com/linux/docker-fix-no-space-error#2-changing-the-storage-location
-    - RUN apt-get clean && rm -rf /var/lib/apt/lists/* (캐시삭제)
+    - RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*(캐시삭제)
         ```
         # 마지막에 한번 캐시삭제시
         hadoop-base                   latest           1fea6560a19b   2 hours ago     3.53GB
         # 매 압축해제 마다 캐시삭제시 이미지 용량(intermediate layer)
-        hadoop-base                   latest           19c3bc0260f7   19 minutes ago   3.16GB
+        hadoop-base                   latest           19c3bc0260f7   19 minutes ago   2.83GB
         ```
     - <none>으로 되어있는 이미지 삭제
+        - https://www.lainyzine.com/ko/article/docker-prune-usage-remove-unused-docker-objects/
+        ```
+        # docker image prune와 동일
         docker rmi $(docker images -f dangling=true -q)
+        ```
 
 - namenode is running as process 77.  Stop it first and ensure /tmp/hadoop-root-namenode.pid file is empty before retry.
+
 - ssh 수동 실행으로 웹UI 접속확인
-    - ~/ssh start
-    
+```bash
+# this tells you whether your ssh instance is active/inactive
+service ssh status
+# OR this list all running processes whose names contain the string "ssh"
+ps -A | grep ssh
+# It's likely that ssh would be active and running but sshd would not. To enable them:
+service ssh start
+# for Debian/Ubuntu
+/etc/init.d/ssh start
+/hadoop-3.3.5/sbin/start-all.sh
+
+```
+
+## 포맷
+1. 서버 종료
+    - 모든 노드의 네임노드 프로세스와 데이타노드 프로세스 종료
+1. 네임노드 포맷
+    - hdfs namenode -format
+1. 설정 변경
+    - dfs.datanode.data.dir 경로에서 VERSION파일의 clusterID를 신규롤 생성된 ID로 변경
+    - cat /opt/hadoop/dfs/name/**/VERSION
