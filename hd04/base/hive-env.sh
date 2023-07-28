@@ -45,10 +45,11 @@
 
 
 # Set HADOOP_HOME to point to a specific hadoop install directory
-HADOOP_HOME=/hadoop-3.3.5
+# HADOOP_HOME=/opt/hadoop-3.3.5
+HADOOP_HOME=$HADOOP_HOME
 
 # Hive Configuration Directory can be controlled by:
-# export HIVE_CONF_DIR=
+# export HIVE_CONF_DIR=$HIVE_HOME/conf
 
 # Folder containing extra libraries required for hive compilation/execution can be controlled by:
 # export HIVE_AUX_JARS_PATH=
