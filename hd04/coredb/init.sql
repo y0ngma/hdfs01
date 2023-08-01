@@ -1,0 +1,2 @@
+CREATE DATABASE hue;
+CREATE DATABASE airflow;
