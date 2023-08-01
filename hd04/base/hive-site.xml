@@ -9,10 +9,16 @@
     <name>hive.server2.enable.doAs</name> 
     <value>false</value>
   </property>
-  <property>        
+  <property>
     <name>hive.metastore.local</name>
     <value>false</value>
   </property>
+
+  <!-- <property>
+    <name>hive.metastore.warehouse.dir</name>
+    <value>/user/hive/warehouse</value>
+  </property> -->
+
   <property>
   <name>datanucleus.autoCreateSchema</name>
     <value>false</value>

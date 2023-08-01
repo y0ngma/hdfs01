@@ -21,10 +21,13 @@ service ssh start
 start-all.sh
 
 # Hive
-hdfs dfs -mkdir -p /user/test 
-hdfs dfs -mkdir -p /user/tmp 
-hdfs dfs -mkdir -p /user/hive/warehouse 
-hdfs dfs -chmod g+w /user/tmp 
+hdfs dfs -mkdir -p /user/test
+hdfs dfs -mkdir -p /user/tmp
+hdfs dfs -mkdir -p /user/hive/warehouse
+hdfs dfs -chmod g+w /user/tmp
 hdfs dfs -chmod g+w /user/test
-hdfs dfs -chmod g+w /user/hive/warehouse 
+hdfs dfs -chmod g+w /user/hive/warehouse
+# 스키마 초기화
+# schematool -initSchema -dbType postgres
+# metastore 기동
 hiveserver2
