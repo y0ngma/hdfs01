@@ -80,3 +80,4 @@ RUN chmod 0600 ~/.ssh/authorized_keys
 
 # intermediate layer에 쌓이는 cached 패키지 파일과 리스트 정리
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get update && apt-get install -y net-tools

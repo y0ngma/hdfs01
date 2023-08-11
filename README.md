@@ -168,6 +168,26 @@ local               hadoop_namenode
 
 ---
 
+# HiveServer2
+    https://sparkbyexamples.com/apache-hive/hive-start-hiveserver2-and-beeline/
+```bash
+# 1. 실행하기
+$HIVE_HOME/bin/hiveserver2
+# 실행방법2
+$HIVE_HOME/bin/hive --service hiveserver2
+# 실행방법3 : nohup 모드로 실행
+nohup $HIVE_HOME/bin/hive --service hiveserve2 &
+# 2. 실행확인 : 포트 listening 상태 확인
+netstat -anp | grep 10000
+# 3. Hive는 자바언어이므로 jps로 확인
+jps
+# 4. HiveServer2 web UI접속확인 : 127.0.0.1:10002 by default
+
+```
+
+
+---
+
 # Note
 ```bash
 # 자동 종료되는 컨테이너 프로세스 접속 exec안될때 사용가능한 명령어
@@ -178,6 +198,16 @@ docker run -it --entrypoint=/bin/bash ff735660e7fa
 # 명령어 확인하기
 docker image inspect hadoop_hadoop:latest | jq '.[].ContainerConfig.Cmd'
 ```
+
+## 포맷
+1. 서버 종료
+    - 모든 노드의 네임노드 프로세스와 데이타노드 프로세스 종료
+1. 네임노드 포맷
+    - hdfs namenode -format
+1. 설정 변경
+    - dfs.datanode.data.dir 경로에서 VERSION파일의 clusterID를 신규롤 생성된 ID로 변경
+    - cat /opt/hadoop/dfs/name/**/VERSION
+
 
 ## error
 - 윈도우와 우분투 왔다갔다 하면서 코드내 공백이 바뀐경우
@@ -226,11 +256,26 @@ service ssh start
 
 ```
 
-## 포맷
-1. 서버 종료
-    - 모든 노드의 네임노드 프로세스와 데이타노드 프로세스 종료
-1. 네임노드 포맷
-    - hdfs namenode -format
-1. 설정 변경
-    - dfs.datanode.data.dir 경로에서 VERSION파일의 clusterID를 신규롤 생성된 ID로 변경
-    - cat /opt/hadoop/dfs/name/**/VERSION
+https://docs.cloudera.com/HDPDocuments/HDP2/HDP-2.3.4/bk_installing_manually_book/content/validate_installation.html
+
+
+- 다음과 같이 복수의 Simple Logging Facade 4 Java 바인딩이 존재 -> 하나만 선택
+log4j-slf4j-impl
+slf4j-reload4j
+```bash
+root@namenode:/# hive
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/opt/hadoop-3.3.5/apache-hive-3.1.3-bin/lib/
+                        log4j-slf4j-impl-2.17.1.jar!/
+                        org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/opt/hadoop-3.3.5/share/hadoop/common/lib/
+                        slf4j-reload4j-1.7.36.jar!/
+                        org/slf4j/impl/StaticLoggerBinder.class]
+```
+8월
+14일 Simple Logging Facade for Java 충돌 이슈 해결
+16일 hiverserver web UI 접속
+17일 Metastore 구동
+18일 Beeline 및 Spark 정상 작동 확인
+23일 Zookeeper, Kafka 리서치
+28일 Zookeeper 및 Kafka 설치
