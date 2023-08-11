@@ -5,7 +5,8 @@ version: "3.4"
 x-datanode_base: &datanode_base
   image: hadoop-datanode
   networks:
-    - bridge
+    # - bridge
+    - data-echo-network
 
 services:
   namenode:
@@ -20,7 +21,8 @@ services:
       - namenode:/opt/hadoop/dfs/name
       - /tmp:/tmp
     networks:
-      - bridge
+      # - bridge
+      - data-echo-network
 
   datanode01:
     <<: *datanode_base
@@ -42,4 +44,6 @@ volumes:
   datanode02:
 
 networks:
-  bridge:
+  # bridge:
+  data-echo-network:
+    external: true
