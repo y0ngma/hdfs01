@@ -22,7 +22,7 @@
   <property>
   <name>datanucleus.autoCreateSchema</name>
     <value>false</value>
-    <description>Creates necessary schema on a startup if one doesn't exist</ description>
+    <description>Creates necessary schema on a startup if one doesn't exist</description>
   </property>
   <property>
     <name>javax.jdo.option.ConnectionURL</name>
