@@ -182,15 +182,21 @@ netstat -anp | grep 10000
 # 3. Hive는 자바언어이므로 jps로 확인
 jps
 # 4. HiveServer2 web UI접속확인 : 127.0.0.1:10002 by default
-
 ```
 
 
 ---
 
-# Note
+## Note
+- 컨테이너 IP주소 확인하기
 ```bash
-# 자동 종료되는 컨테이너 프로세스 접속 exec안될때 사용가능한 명령어
+# docker inspect -f "{{ .NetworkSettings.IPAddress }}" CONTAINER_ID
+docker inspect -f "{{ .NetworkSettings.IPAddress }}" 9674a80c609c
+# docker exec CONTAINER_ID ip addr show eth0
+docker exec 9674a80c609c ip addr show eth0
+```
+- 자동 종료되는 컨테이너 프로세스 접속 exec안될때 사용가능한 명령어
+```bash
 # docker run -it --entrypoint=/bin/bash your_image_id
 docker run -it --entrypoint=/bin/bash ff735660e7fa
 # cp, mv 파일 강제 덮어쓰기 명령어
@@ -271,11 +277,7 @@ SLF4J: Found binding in [jar:file:/opt/hadoop-3.3.5/apache-hive-3.1.3-bin/lib/
 SLF4J: Found binding in [jar:file:/opt/hadoop-3.3.5/share/hadoop/common/lib/
                         slf4j-reload4j-1.7.36.jar!/
                         org/slf4j/impl/StaticLoggerBinder.class]
+# 조치 방법
+# https://stackoverflow.com/questions/27050820/running-hive-0-12-with-error-of-slf4j
+rm /opt/hadoop-3.3.5/apache-hive-3.1.3-bin/lib/log4j-slf4j-impl-2.17.1.jar
 ```
-8월
-14일 Simple Logging Facade for Java 충돌 이슈 해결
-16일 hiverserver web UI 접속
-17일 Metastore 구동
-18일 Beeline 및 Spark 정상 작동 확인
-23일 Zookeeper, Kafka 리서치
-28일 Zookeeper 및 Kafka 설치

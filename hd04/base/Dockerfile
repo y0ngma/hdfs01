@@ -81,3 +81,5 @@ RUN chmod 0600 ~/.ssh/authorized_keys
 # intermediate layer에 쌓이는 cached 패키지 파일과 리스트 정리
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN apt-get update && apt-get install -y net-tools
+# Class path contains multiple SLF4J bindings 경고문구 해결
+RUN rm /opt/hadoop-3.3.5/apache-hive-3.1.3-bin/lib/log4j-slf4j-impl-2.17.1.jar
