@@ -20,6 +20,9 @@ $HADOOP_HOME/bin/hdfs --config $HADOOP_CONF_DIR namenode
 service ssh start
 start-all.sh
 
+# logging 바인딩 충돌경고 제거(SLF4J: Class path contains multiple SLF4J bindings)
+rm /opt/hadoop-3.3.5/apache-hive-3.1.3-bin/lib/log4j-slf4j-impl-2.17.1.jar
+
 # Hive
 hdfs dfs -mkdir -p /user/test
 hdfs dfs -mkdir -p /user/tmp
