@@ -182,8 +182,18 @@ netstat -anp | grep 10000
 # 3. Hive는 자바언어이므로 jps로 확인
 jps
 # 4. HiveServer2 web UI접속확인 : 127.0.0.1:10002 by default
-```
 
+# 스키마 생성
+hive --service schemaTool -dbType postgres -initSchema
+# 정보확인 예시
+$ hive --service schemaTool -dbType mysql -info
+Metastore connection URL:      jdbc:mysql://database_ip:database_port/database_name
+Metastore Connection Driver :  org.mariadb.jdbc.Driver
+Metastore connection User:     user_name
+Hive distribution version:     2.3.0
+Metastore schema version:      2.3.0
+schemaTool completed
+```
 
 ---
 
