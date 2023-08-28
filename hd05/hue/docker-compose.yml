@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  hue:
+      image: gethue/hue:latest
+      hostname: hue
+      container_name: hue      
+      ports:
+        - "8081:8888"
+      volumes:
+        - ./hue.ini:/usr/share/hue/desktop/conf/z-hue.ini
+        - ./log.conf:/etc/hue/conf/log.conf
+      networks:
+        - data-echo-network
+networks:
+  data-echo-network:
+    external: true
